@@ -41,6 +41,29 @@ app.post('/product',async(req,res)=>{
         console.log(err);
     }
 })
+app.put('/product/:id',async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const {productname,cost,quandity}=req.body;
+        const a = await contract.updateproduct(id,productname,cost,quandity);
+        await a.wait();
+        res.json({success:true});
+
+    }catch(err){
+        console.log(err);
+    }
+})
+app.delete('/product/:id',async(req,res)=>{
+    try{
+        const a = await contract.deleteproduct(req.params.id);
+        await a.wait();
+        res.json({success:true});
+        
+    }
+    catch(err){
+        console.log(err);
+    }
+})
 app.listen(PORT,()=>{
     console.log(`the app is been hosted in ${PORT}`)
 
